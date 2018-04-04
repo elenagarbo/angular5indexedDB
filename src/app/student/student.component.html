@@ -1,0 +1,68 @@
+<div id="divContainer">
+  <table>
+    <tr>
+      <th>Student Name</th>
+      <th>Gender</th>
+      <th>Country</th>
+      <th>City</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>
+        <input type="text" [(ngModel)]="_newStudent.Name" />
+      </td>
+      <td>
+        <select [(ngModel)]="_newStudent.Gender">
+          <option value="m">Male</option>
+          <option value="f">FeMale</option>
+        </select>
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="_newStudent.Country" />
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="_newStudent.City" />
+      </td>
+      <td>
+        <button (click)="addStudent()">Add</button>
+      </td>
+      <td>
+        <button (click)="clearNewStudent()">Cancel</button>
+      </td>
+    </tr>
+    <tr *ngFor="let student of _students" [attr.data-id]="student.Id">
+      <td>
+        <input type="text" *ngIf="student.editing" [(ngModel)]="_oldStudent.Name" />
+        <span *ngIf="!student.editing">
+          {{student.Name}}
+        </span>
+      </td>
+      <td>
+        <select *ngIf="student.editing" [(ngModel)]="_oldStudent.Gender">
+          <option value="m">Male</option>
+          <option value="f">FeMale</option>
+        </select>
+        <span *ngIf="!student.editing">{{student.Gender=='m'?'Male':'Female'}}</span>
+      </td>
+      <td>
+        <input type="text" *ngIf="student.editing" [(ngModel)]="_oldStudent.Country" />
+        <span *ngIf="!student.editing">{{student.Country}}</span>
+      </td>
+      <td>
+        <input type="text" *ngIf="student.editing" [(ngModel)]="_oldStudent.City" />
+        <span *ngIf="!student.editing">{{student.City}}</span>
+      </td>
+      <td>
+        <button *ngIf="student.editing" (click)="updateStudent();student.editing=false">Update</button>
+        <button *ngIf="!student.editing" (click)="student.editing=true;getStudent(student.Id);">Edit</button>
+      </td>
+      <td>
+        <button *ngIf="student.editing" (click)="student.editing=false">Cancel</button>
+        <button *ngIf="!student.editing" (click)="deleteStudent(student.Id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+  <button (click)="clearStudents()" style="margin-top:50px;">Clear Data</button>
+</div>
